@@ -98,3 +98,35 @@ them against scripts/check_dashboard.py. Then stop and wait for me.
 
 - **Agent produced:** A pull request (#2) that replaced the placeholder `index.html` with the dashboard page, and added `assets/dashboard.js` and `assets/dashboard.css`. It listed the card values for All campuses, the University of Illinois Urbana-Champaign, and the University of Michigan. Its own browser test matched every card to the SQLite figures from `scripts/check_dashboard.py` for all 12 dropdown options. While testing, the agent noticed that Davis showed "2 mi" while the other campuses showed one decimal (for example "2.1 mi"), and it changed the page to always show one decimal.
 - **Checked or changed:** I checked that the pull request changed only three files (`index.html`, `assets/dashboard.css`, `assets/dashboard.js`) and nothing inside `data/`, then merged it. The publish run after the merge failed (run #4). I re-ran it and it passed. I then opened the live site in an incognito window and saw that the "All campuses" cards matched the agent's table: 35,442 sales, $410,000 median price (35,371 sales used, 71 left out), 11 days on market (28,042 sales used, 7,400 skipped), and 3.4 miles to campus.
+
+## 2026-11-13: The three charts
+
+- **Asked:**
+
+```
+Step 2 is merged. Do step 3 only: add the three charts, with Chart.js
+loaded from cdnjs at a pinned version.
+
+- Bar chart: median sale price by city for the selected campus.
+- Scatter chart: sale price vs. miles to campus for the selected campus.
+  Draw every point (no sampling). Use small dots and no animation.
+- Line chart: number of sales per month for the selected campus. Label
+  the first and last months as partial months.
+- All three charts update when the campus dropdown changes, and they
+  use the same price rule ($10,000 to $5,000,000) as the cards. Say so
+  under the charts.
+- Give each chart a title that states the finding, axis labels with
+  units, and a table view for screen readers.
+- Use colors that are readable for colorblind users, and make sure it
+  works on a phone with no sideways scrolling and no console errors.
+- Do not edit anything in data/.
+
+Open one pull request. In it, list for "All" and for the University of
+Michigan: the number of points in the scatter chart, the highest median
+price among the cities, and the total number of sales in the line chart.
+Say how you checked them against scripts/check_dashboard.py. Then stop and
+wait for me.
+```
+
+- **Agent produced:** A pull request (#3) that added a bar chart (median price by city), a scatter chart (price against miles to campus, with every point drawn), and a line chart (sales per month, with the first and last months marked as partial). Each chart has a title that states a finding, axis labels, and a "Show the numbers as a table" view. It reported that every chart number matched `scripts/check_dashboard.py` for "All" and all 11 campuses. The line chart counts all sales except the 6 with no sale date and does not use the price rule, because it counts sales, not prices. The agent kept this and said so on the page.
+- **Checked or changed:** The agent made two mistakes of its own and fixed them before opening the pull request. Its phone screenshots showed overlapping price labels under the bar chart and a missing "(partial)" label on the last month. The agent also said it could not load Chart.js from cdnjs in its test environment, so it tested with the same version from npm and asked me to confirm the charts on the live site. I checked that the pull request changed only `index.html`, `assets/dashboard.js` and `assets/dashboard.css`, and nothing inside `data/`. I also checked that the numbers made sense: the scatter point count for All (35,371) equals the number of sales kept by the price rule, and for Michigan 3,007 = 3,021 minus 14 sales left out. The line chart total for All (35,436) equals 35,442 minus the 6 sales with no sale date. I confirmed the pinned Chart.js 4.4.1 file exists on cdnjs. I merged the pull request, and on the live site all of the checks passed: the charts appear, and the numbers match the agent's report for All and for the University of Michigan.
