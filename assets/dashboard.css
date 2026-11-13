@@ -154,3 +154,94 @@ footer {
   font-size: 0.85rem;
   color: var(--text-secondary);
 }
+
+/* ---------- Charts ---------- */
+
+:root {
+  --series-1: #2a78d6;
+  --series-1-fill: rgba(42, 120, 214, 0.32);
+  --grid: #e6e5e0;
+  --axis: #8a8984;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --series-1: #3987e5;
+    --series-1-fill: rgba(57, 135, 229, 0.38);
+    --grid: #2b2a27;
+    --axis: #6f6e69;
+  }
+}
+
+:root[data-theme="dark"] {
+  --series-1: #3987e5;
+  --series-1-fill: rgba(57, 135, 229, 0.38);
+  --grid: #2b2a27;
+  --axis: #6f6e69;
+}
+
+.charts { margin-bottom: 2rem; }
+
+.chart-card {
+  margin: 0 0 16px;
+  background: var(--surface-card);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 1rem 1.1rem;
+  min-width: 0;
+}
+
+.chart-title {
+  font-size: 1.15rem;
+  line-height: 1.3;
+  margin: 0 0 0.25rem;
+}
+
+.chart-subtitle {
+  margin: 0 0 0.75rem;
+  font-size: 0.9rem;
+  color: var(--text-secondary);
+}
+
+.chart-box {
+  position: relative;
+  width: 100%;
+  height: 320px;
+}
+
+.chart-box-scatter { height: 380px; }
+
+.chart-box canvas { max-width: 100%; }
+
+.table-view { margin-top: 0.75rem; font-size: 0.9rem; }
+
+.table-view summary {
+  cursor: pointer;
+  color: var(--text-secondary);
+  padding: 0.6rem 0;
+}
+
+.table-view summary:focus-visible {
+  outline: 2px solid var(--focus);
+  outline-offset: 2px;
+}
+
+.table-view table {
+  border-collapse: collapse;
+  width: 100%;
+  font-variant-numeric: tabular-nums;
+}
+
+.table-view th, .table-view td {
+  text-align: left;
+  padding: 0.3rem 0.5rem;
+  border-bottom: 1px solid var(--border);
+}
+
+.table-view td.num, .table-view th.num { text-align: right; }
+
+.chart-note {
+  font-size: 0.9rem;
+  color: var(--text-secondary);
+  margin: 0;
+}
