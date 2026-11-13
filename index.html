@@ -1,31 +1,87 @@
 <!DOCTYPE html>
-<!-- A placeholder from the Home Sales template. Replace this file with your site's first page. -->
 <html lang="en">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Under construction</title>
+  <title>Which college town is the best deal?</title>
+  <meta name="description" content="Home sales around 11 university campuses: sales, median price, days on market and distance to campus, computed from the College-town home sales dataset.">
   <!-- An empty icon, so the browser doesn't log an error looking for favicon.ico -->
   <link rel="icon" href="data:,">
-  <style>
-    :root { color-scheme: light dark; }
-    body {
-      max-width: 40rem;
-      margin: 0 auto;
-      padding: 3rem 1rem;
-      font-family: system-ui, sans-serif;
-      line-height: 1.5;
-    }
-    footer { margin-top: 3rem; font-size: 0.875rem; opacity: 0.75; }
-  </style>
+  <link rel="stylesheet" href="assets/dashboard.css">
+  <script src="assets/dashboard.js" defer></script>
 </head>
 <body>
+  <header class="page-header">
+    <h1>Which college town is the best deal?</h1>
+    <p class="intro">
+      <span id="intro-sales">Completed</span> home sales around
+      <span id="intro-campuses">several</span> university campuses<span id="intro-range"></span>.
+      Pick a campus to compare how much homes sell for, how fast they go under contract and how
+      far they are from campus. Every number below is computed in your browser from the dataset.
+    </p>
+  </header>
+
   <main>
-    <h1>This site is under construction</h1>
-    <p>It will show findings from the College-town home sales dataset.</p>
+    <section class="controls" aria-label="Filters">
+      <label for="campus">Campus</label>
+      <select id="campus" disabled>
+        <option value="">Loading…</option>
+      </select>
+    </section>
+
+    <p id="status" class="status" role="status">Loading data…</p>
+
+    <section class="cards" aria-label="Key figures" aria-live="polite">
+      <article class="card">
+        <h2 class="card-label">Sales</h2>
+        <p class="card-value" id="value-sales">–</p>
+        <p class="card-note" id="note-sales"></p>
+      </article>
+      <article class="card">
+        <h2 class="card-label">Median sale price</h2>
+        <p class="card-value" id="value-price">–</p>
+        <p class="card-note" id="note-price"></p>
+      </article>
+      <article class="card">
+        <h2 class="card-label">Median days on market</h2>
+        <p class="card-value" id="value-dom">–</p>
+        <p class="card-note" id="note-dom"></p>
+      </article>
+      <article class="card">
+        <h2 class="card-label">Median miles to campus</h2>
+        <p class="card-value" id="value-miles">–</p>
+        <p class="card-note" id="note-miles"></p>
+      </article>
+    </section>
+
+    <section class="rules" aria-labelledby="rules-title">
+      <h2 id="rules-title">How these numbers are computed</h2>
+      <ul>
+        <li><strong>Medians, not averages.</strong> A few extreme sales would pull an average far
+          from a typical home, so every figure is a median.</li>
+        <li><strong>Price rule.</strong> Price figures use only sales from $10,000 to $5,000,000.
+          Sales outside that range are implausible for a home in these towns.
+          <span id="rule-price"></span></li>
+        <li><strong>Days on market</strong> is the contract date minus the list date: the time
+          from listing to an accepted offer. Sales missing either date are skipped, never counted
+          as zero. <span id="rule-dom"></span> Many skipped sales never had a public listing
+          (off-market or builder sales), so this figure describes homes that were listed.</li>
+        <li><strong>Miles to campus</strong> is the straight-line distance to the nearest
+          campus's landmark, not driving distance. It uses every sale.</li>
+        <li><strong>Every sale counts.</strong> Each sale is identified by its listing ID. Sales
+          that share a street address (such as units in one condo building) are separate sales
+          and are all kept.</li>
+        <li><strong>Not used:</strong> square feet of living area, lot size and the reported home
+          type. Living area and lot size are not needed for any figure here, and home type is
+          unreliable in this dataset.</li>
+      </ul>
+    </section>
   </main>
+
   <footer>
-    <p>Data: College-town home sales dataset, version 1.0 (2026). University of Illinois-Deloitte Foundation Center for Business Emerging Technologies. Data collected March 2026.</p>
+    <p>Data: College-town home sales dataset, version 1.0 (2026). University of Illinois-Deloitte
+      Foundation Center for Business Emerging Technologies. Data collected March 2026. Values are
+      as reported by the collection source, not verified against county records.</p>
   </footer>
 </body>
 </html>
