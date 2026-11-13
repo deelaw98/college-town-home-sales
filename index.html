@@ -8,6 +8,8 @@
   <!-- An empty icon, so the browser doesn't log an error looking for favicon.ico -->
   <link rel="icon" href="data:,">
   <link rel="stylesheet" href="assets/dashboard.css">
+  <!-- Chart.js 4.4.1 (MIT License), pinned version from cdnjs -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js" defer></script>
   <script src="assets/dashboard.js" defer></script>
 </head>
 <body>
@@ -52,6 +54,56 @@
         <p class="card-value" id="value-miles">–</p>
         <p class="card-note" id="note-miles"></p>
       </article>
+    </section>
+
+    <section class="charts" aria-label="Charts">
+      <p id="chart-status" class="status" role="status"></p>
+
+      <figure class="chart-card">
+        <h2 class="chart-title" id="title-city">Median sale price by city</h2>
+        <p class="chart-subtitle">Median sale price of sales from $10,000 to $5,000,000, by city.</p>
+        <div class="chart-box" id="box-city">
+          <canvas id="chart-city" role="img" aria-label="Bar chart of median sale price by city. The same numbers are in the table below."></canvas>
+        </div>
+        <details class="table-view">
+          <summary>Show the numbers as a table</summary>
+          <table id="table-city"></table>
+        </details>
+      </figure>
+
+      <figure class="chart-card">
+        <h2 class="chart-title" id="title-scatter">Sale price and miles to campus</h2>
+        <p class="chart-subtitle" id="subtitle-scatter">Each dot is one sale from $10,000 to $5,000,000.</p>
+        <div class="chart-box chart-box-scatter">
+          <canvas id="chart-scatter" role="img" aria-label="Scatter chart of sale price against miles to campus, one dot per sale. A summary by distance is in the table below."></canvas>
+        </div>
+        <details class="table-view">
+          <summary>Show the numbers as a table</summary>
+          <table id="table-scatter"></table>
+        </details>
+      </figure>
+
+      <figure class="chart-card">
+        <h2 class="chart-title" id="title-month">Sales per month</h2>
+        <p class="chart-subtitle">Number of sales by the month the sale closed. Hollow dots and dashed lines mark partial months.</p>
+        <div class="chart-box">
+          <canvas id="chart-month" role="img" aria-label="Line chart of the number of sales per month. The same numbers are in the table below."></canvas>
+        </div>
+        <details class="table-view">
+          <summary>Show the numbers as a table</summary>
+          <table id="table-month"></table>
+        </details>
+      </figure>
+
+      <p class="chart-note" id="chart-note">
+        <strong>About these charts.</strong> The bar chart and the scatter chart use the same price
+        rule as the median price card: only sales from $10,000 to $5,000,000.
+        <span id="note-charts-price"></span>
+        The sales-per-month chart counts sales the same way as the Sales card, by the date the
+        sale closed. <span id="note-charts-month"></span>
+        The first and last months are partial months: the data starts partway through the first
+        and ends partway through the last, so they do not cover a whole month of sales.
+      </p>
     </section>
 
     <section class="rules" aria-labelledby="rules-title">
