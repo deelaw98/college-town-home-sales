@@ -130,3 +130,49 @@ wait for me.
 
 - **Agent produced:** A pull request (#3) that added a bar chart (median price by city), a scatter chart (price against miles to campus, with every point drawn), and a line chart (sales per month, with the first and last months marked as partial). Each chart has a title that states a finding, axis labels, and a "Show the numbers as a table" view. It reported that every chart number matched `scripts/check_dashboard.py` for "All" and all 11 campuses. The line chart counts all sales except the 6 with no sale date and does not use the price rule, because it counts sales, not prices. The agent kept this and said so on the page.
 - **Checked or changed:** The agent made two mistakes of its own and fixed them before opening the pull request. Its phone screenshots showed overlapping price labels under the bar chart and a missing "(partial)" label on the last month. The agent also said it could not load Chart.js from cdnjs in its test environment, so it tested with the same version from npm and asked me to confirm the charts on the live site. I checked that the pull request changed only `index.html`, `assets/dashboard.js` and `assets/dashboard.css`, and nothing inside `data/`. I also checked that the numbers made sense: the scatter point count for All (35,371) equals the number of sales kept by the price rule, and for Michigan 3,007 = 3,021 minus 14 sales left out. The line chart total for All (35,436) equals 35,442 minus the 6 sales with no sale date. I confirmed the pinned Chart.js 4.4.1 file exists on cdnjs. I merged the pull request, and on the live site all of the checks passed: the charts appear, and the numbers match the agent's report for All and for the University of Michigan.
+
+## 2026-11-13: README
+
+- **Asked:**
+
+```
+Step 3 is merged. Do step 4 only: finish README.md. Change nothing else:
+do not edit index.html, assets/, scripts/, data/ or AGENT_LOG.md.
+
+Rewrite README.md for the finished site:
+
+1. Replace the title with "Which college town is the best deal?".
+2. Delete the whole "Start here (delete this section before you
+   submit)" section, including its file table.
+3. "What this site is for": the question the dashboard answers, who it
+   is for (for example a student or family comparing college towns),
+   and what each part of the page shows (campus dropdown, four number
+   cards, bar chart, scatter chart, line chart).
+4. "Live site": https://deelaw98.github.io/college-town-home-sales/
+5. "Data notes": say which rows are left out or skipped and why, and
+   how every figure is defined. Cover each of the five problems from
+   docs/data_description_sheet.md: days on market and blank dates,
+   duplicate street addresses, impossible prices, the unreliable
+   home_type column, and impossible square feet and lot sizes. For each,
+   say what this site does about it. Use the real counts from the
+   repo (for example 71 sales left out by the price rule, 7,400 skipped
+   for days on market, 6 sales with no sale date) and check each number
+   against data/dashboard_data.json or scripts/check_dashboard.py before
+   you write it. Explain why the line chart does not use the price
+   rule.
+6. Keep the section on how to rerun the scripts that you wrote in
+   step 1.
+7. "Tools we used": Claude Code on the web (the coding agent that wrote
+   the code), the Claude chat assistant (I used it to plan the work and
+   to check the agent's numbers), Chart.js 4.4.1 from cdnjs, Python 3
+   standard library for the scripts, SQLite for the check script, and
+   GitHub Pages with GitHub Actions for publishing.
+8. Keep the "Citation" section as it is.
+9. Delete the "Who did what" section. I worked alone.
+
+Do not claim anything you have not checked. Open one pull request and
+list in it each number you verified and how. Then stop and wait for me.
+```
+
+- **Agent produced:** A pull request (#4) that rewrote `README.md` with the site's purpose, the live link, a table that defines every figure, a section on each of the five data problems, the tools used, and the citation. It removed the "Start here" and "Who did what" sections.
+- **Checked or changed:** While writing, the agent reworded a few sentences that claimed more than it had checked, and it added the exact split of the duplicate addresses (60 rows at 13 State College addresses plus 3 pairs). I read the finished README and compared its numbers with the data description sheet, including 71 sales left out by the price rule, 7,400 skipped for days on market, the 66 duplicate-address rows, 127 homes with 0 square feet, and 274 lots over 10 acres. They all matched.
