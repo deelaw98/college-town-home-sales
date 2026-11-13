@@ -38,6 +38,19 @@ https://your-username.github.io/your-repo-name/
 
 _Replace this line. Say which rows you left out and why, and how each figure on the site is defined. "Five things that will bite you" in the description sheet lists the problems to cover._
 
+## Rebuilding the dashboard data
+
+The dashboard reads `data/dashboard_data.json`, a smaller file made from `data/college_town_home_sales.csv`. It keeps only the fields the dashboard uses (`listing_id`, city, campus, miles to campus, sale price, sale month and days on market) for all 35,442 rows. No rows are removed. The page applies the price rule and the days-on-market rule itself. The five dataset files are never changed.
+
+To rebuild the file and check it, run these from the repository root. They need Python 3 and no extra packages:
+
+```bash
+python3 scripts/build_dashboard_data.py
+python3 scripts/check_dashboard.py
+```
+
+`check_dashboard.py` recomputes every dashboard figure from `data/college_town_home_sales.sqlite`, for "All" and for each campus. It compares them with the JSON and prints "OK" or lists the differences.
+
 ## Tools we used
 
 _Replace this line with your AI coding agent or agents, and any libraries and other tools you used._
