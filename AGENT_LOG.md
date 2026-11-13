@@ -68,3 +68,33 @@ and rows without a sale date. Then stop and wait for me.
 
 - **Agent produced:** A plan, then a pull request (#1) with a build script, a smaller data file, a check script, and a README section.
 - **Checked or changed:** The agent said 6,400 rows were skipped for days on market. The data description sheet says days on market can be computed on 28,042 rows, and 35,442 minus 28,042 is 7,400, not 6,400. I asked the agent to recount. It confirmed 7,400, said its 6,400 was an arithmetic mistake, and corrected the pull request. I then reviewed the pull request: only four files changed, and `index.html` and the five dataset files were not touched. I merged it, and the Pages publish run passed.
+
+## 2026-11-13: Dashboard page with the campus dropdown and number cards
+
+- **Asked:**
+
+```
+Step 1 is merged. Do step 2 only: replace the placeholder index.html with
+the dashboard page, but no charts yet.
+
+- Put the code in assets/dashboard.js and assets/dashboard.css.
+- Title "Which college town is the best deal?" with a short intro.
+- A campus dropdown with an "All" option.
+- Four number cards: sales count, median price, median days on market,
+  median miles to campus. All values are computed in the browser from
+  data/dashboard_data.json for the selected campus.
+- State the price rule ($10,000 to $5,000,000) and the number of rows
+  it removes, the skipped-days-on-market count, and that square feet
+  and lot size are not used.
+- Keep the data credit and citation in the footer.
+- It must work on a phone and show no console errors.
+- Do not edit anything in data/.
+
+Open one pull request. In it, list the card values for All, for
+Champaign/Urbana's campus (University of Illinois Urbana-Champaign), and
+for Ann Arbor's campus (University of Michigan), and say how you checked
+them against scripts/check_dashboard.py. Then stop and wait for me.
+```
+
+- **Agent produced:** A pull request (#2) that replaced the placeholder `index.html` with the dashboard page, and added `assets/dashboard.js` and `assets/dashboard.css`. It listed the card values for All campuses, the University of Illinois Urbana-Champaign, and the University of Michigan. Its own browser test matched every card to the SQLite figures from `scripts/check_dashboard.py` for all 12 dropdown options. While testing, the agent noticed that Davis showed "2 mi" while the other campuses showed one decimal (for example "2.1 mi"), and it changed the page to always show one decimal.
+- **Checked or changed:** I checked that the pull request changed only three files (`index.html`, `assets/dashboard.css`, `assets/dashboard.js`) and nothing inside `data/`, then merged it. The publish run after the merge failed (run #4). I re-ran it and it passed. I then opened the live site in an incognito window and saw that the "All campuses" cards matched the agent's table: 35,442 sales, $410,000 median price (35,371 sales used, 71 left out), 11 days on market (28,042 sales used, 7,400 skipped), and 3.4 miles to campus.
